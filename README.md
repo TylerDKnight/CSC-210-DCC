@@ -2,8 +2,8 @@
 CSC 210 Project
 
 Members:
-Joseph Plvan-Franke
-Colin Corliss
-Richard Munson 
+Joseph Plvan-Franke, 
+Colin Corliss, 
+Richard Munson, 
 Tyler Knight
 
