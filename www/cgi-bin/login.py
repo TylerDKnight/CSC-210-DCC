@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!/usr/bin/env python
 
 import cgi
 import cgitb
@@ -7,7 +7,8 @@ import hashlib
 
 cgitb.enable()
 
-account_data = cgi.FieldStorage()
+
+print "Content-type: text/html\r\n\r\n"
 
 def authenticate(username, password):
 	'''
@@ -46,13 +47,14 @@ def authenticate(username, password):
 
 def main():
 	# get the user data from the sent form
-	login_data = cgi.FieldStorage()
-	username = login_form['username'].value
-	password = login_form['pass'].value
-
+	
+	login_data = cgi.FieldStorage(keep_blank_values=1)
+	print (login_data)
+	username = login_data['username'].value
+	password = login_data['password'].value
+	
 	if authenticate(username, password):
 		print '''
-		Content-type: text/html\r\n\r\n
 		<html lang="en-us">
 		<head>
 			<meta charset="utf-8">
@@ -70,7 +72,6 @@ def main():
 		print "Location: login.html?status=failed"
 
 
-
 if __name__ == "__main__":
 	'''
 	should only allow main to run if this file is run directly (rather
@@ -79,7 +80,6 @@ if __name__ == "__main__":
 	we could without running main().
 	'''
 	main()
-
 
 
 
