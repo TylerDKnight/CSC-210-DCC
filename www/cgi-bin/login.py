@@ -1,26 +1,87 @@
-#!/usr/bin/python2.7
+#!usr/bin/env python
 
-import os, cgi, cgitb; cgitb.enable()
+import cgi
+import cgitb
+import sqlite3
+import hashlib
 
-fieldData = cgi.FieldStorage()
-loginInfo = fieldData['username'].value
-passInfo = fieldData['password'].value
-returnHTML = "Error: return HTML not assigned"
-##success html TBD
-successfulHTML = "YES"
-##Same as Login page HTML but with failed message
-failedHTML = "<html><head><title>login here</title></head><body><h1 style=\"color:red;\">Login failed!</h1><br/><form action=\"/cgi-bin/login.py\" method=\"POST\"><h1>Username:</h1><br/><input type=\"text\" name=\"userfield\"/><h1>Password:</h1><br/><input type=\"password\" name=\"passwordfield\"/><br/><br/><input type=submit value=\"login\"/></form></body></html>"
+cgitb.enable()
 
-def auth(login, password):
-	return False
-	
-if auth(1, 0):
-	returnHTML = successfulHTML
-else:
-	returnHTML = failedHTML
+account_data = cgi.FieldStorage()
 
-print 'Content-type: text/html\r\n\r\n'
-for key in fieldData.keys():
-	print fieldData[key].value
-print returnHTML
+def authenticate(username, password):
+	'''
+	Authenticates a password encrypted with timestamp using sha256
+	encryption connected to a unique username.  Should return false
+	if the username does not exist or if the password does not match
+	records.
+	'''
+
+	# set up connection and get cursor
+	conn = sqlite3.connect('users.db')
+	cursor = conn.cursor()
+
+	# get user from database
+	users = cursor.execute('SELECT * FROM users WHERE username = ?', [username])
+
+	if users.arraysize != 1:  # no such username exists (usernames are unique)
+		conn.close()
+		return False
+
+	else:
+		user = users.next()
+		encrypted = user[1]
+		salt = user[2]
+
+		# select hash function, and add the password and salt to the hasher
+		hasher = hashlib.sha256()
+		hasher.update(password)
+		hasher.update(salt)
+
+		# compute the hash
+		digest = hasher.hexdigest()
+
+		conn.close()
+		return digest == encrypted
+
+def main():
+	# get the user data from the sent form
+	login_data = cgi.FieldStorage()
+	username = login_form['username'].value
+	password = login_form['pass'].value
+
+	if authenticate(username, password):
+		print '''
+		Content-type: text/html\r\n\r\n
+		<html lang="en-us">
+		<head>
+			<meta charset="utf-8">
+			<meta name="author" content="DCC, Inc.">
+			<link rel="stylesheet" href="css/dccstyles.css">
+			<title>Message In A Bottle</title>
+		</head>
+		<body>
+		'''
+		print '<p>Welcome, ' + username + '!'
+		# probably more to add here, idk
+		print '</body> </html>'
+
+	else:  # redirect back to the login page with a name-value pair
+		print "Location: login.html?status=failed"
+
+
+
+if __name__ == "__main__":
+	'''
+	should only allow main to run if this file is run directly (rather
+	then used within another file).  Usually good practice when using
+	python.  If we needed to use the authenticate f(n) in another file,
+	we could without running main().
+	'''
+	main()
+
+
+
+
+
 
