@@ -1,14 +1,11 @@
-#!/usr/bin/env python
+#!usr/bin/env python
 
 import cgi
 import cgitb
-import sqlite3
+import mysql.connector
 import hashlib
 
 cgitb.enable()
-
-
-print "Content-type: text/html\r\n\r\n"
 
 def authenticate(username, password):
 	'''
@@ -19,18 +16,19 @@ def authenticate(username, password):
 	'''
 
 	# set up connection and get cursor
-	conn = sqlite3.connect('users.db')
+	conn = mysql.connector.connect(user='webConn', password='pass', host='127.0.0.1', database='WebApp')
 	cursor = conn.cursor()
 
 	# get user from database
-	users = cursor.execute('SELECT * FROM users WHERE username = ?', [username])
+	cursor.execute('SELECT * FROM users WHERE username = %s', [username])
 
-	if users.arraysize != 1:  # no such username exists (usernames are unique)
+	if cursor.arraysize != 1:  # no such username exists (usernames are unique)
+		cursor.close()
 		conn.close()
 		return False
 
 	else:
-		user = users.next()
+		user = cursor.next()
 		encrypted = user[1]
 		salt = user[2]
 
@@ -42,19 +40,19 @@ def authenticate(username, password):
 		# compute the hash
 		digest = hasher.hexdigest()
 
+		cursor.close()
 		conn.close()
 		return digest == encrypted
 
 def main():
 	# get the user data from the sent form
-	
-	login_data = cgi.FieldStorage(keep_blank_values=1)
-	print (login_data)
+	login_data = cgi.FieldStorage()
 	username = login_data['username'].value
-	password = login_data['password'].value
-	
+	password = login_data['pass'].value
+
 	if authenticate(username, password):
 		print '''
+		Content-type: text/html\r\n\r\n
 		<html lang="en-us">
 		<head>
 			<meta charset="utf-8">
@@ -72,6 +70,7 @@ def main():
 		print "Location: login.html?status=failed"
 
 
+
 if __name__ == "__main__":
 	'''
 	should only allow main to run if this file is run directly (rather
@@ -80,6 +79,7 @@ if __name__ == "__main__":
 	we could without running main().
 	'''
 	main()
+
 
 
 
