@@ -15,7 +15,7 @@
 		$(function() {
 			if (window.location.href.indexOf("status=failed") != -1) {
 				// the name-value pair is in the url: add the failure message
-				$('#login-error').text("Error: username or password is incorrect.  Please try again.").addClass("error")
+				$('#login-error').text("Error: username or password is incorrect.  Please try again.")
 			} else {
 				$('#login-error').text("");
 			}
@@ -23,8 +23,8 @@
 	</script>
 
 	<h1>Login</h1>
-	<p id="login-error"></p>
-	<form id="login" method="post" action="/cgi-bin/login.py">
+	<p id="login-error" class="error"></p>
+	<form id="login" method="post" action="cgi-bin/login.py">
 		<label for="username">Username: </label>
 		<input type="text" name="username" id="username" class="vertical-form-input">
 
@@ -34,30 +34,29 @@
 		<input type="submit" value="Login">
 	</form>
 	<!-- error messages to be set if there is an error -->
-	<p id="username-error"></p>
-	<p id="password-error"></p>
+	<p id="username-error" class="error"></p>
+	<p id="password-error" class="error"></p>
 
 	<script>
 		$(function() {
 			$('#login').submit(function(event) {
-				var username_error = $('#username-error');
-				var password_error = $('#password-error');
 				if ($('#username').val() === "") {  // field is empty
-					username_error.text("Username field is empty.").addClass("error");
+					$('#username-error').text("Username field is empty.");
 					event.preventDefault();  // stop form from being submitted
 				} else {
-					username_error.text("");
+					$('#username-error').text("");
 				}
 
 				if ($('#password').val() === "") {
-					password_error.text("Password field is empty.").addClass("error");
+					$('#password-error').text("Password field is empty.");
 					event.preventDefault();
 				} else {
-					password_error.text("");
+					$('#password-error').text("");
 				}
 			});
 		});
 	</script>
+
 </body>
 
 </html>
