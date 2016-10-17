@@ -18,10 +18,11 @@ $(function () {
 			navbar.css('display', 'block');  // allow to spill onto next line
 			navbar.width(navbarInitialWidth);  // to make sure navbar width can be accurately computed
 			navbar.css('padding-bottom', '5px');
+			navbar.css('margin-left', '0');
 		} else {
 			navbar.css('display', 'inline-block');  // pull the navbar back up next to the logo
 			navbar.css('margin-left', (navbarMargin + "px"));  // add the margin
-			navbar.css('padding-bottom', 'none');
+			navbar.css('padding-bottom', '0');
 		}
 	}
 
