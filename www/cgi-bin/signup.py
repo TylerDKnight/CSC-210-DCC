@@ -1,4 +1,4 @@
-#!"C:\Program Files\Ampps\python\python.exe"
+#!!/usr/bin/env python
 
 
 #CC
