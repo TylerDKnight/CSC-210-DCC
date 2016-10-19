@@ -1,10 +1,14 @@
-#!/usr/bin/env python
+#!"C:\Program Files\Ampps\python\python.exe"
+
+
 #CC
 import cgitb
 import cgi
 import mysql.connector
 import hashlib
 import datetime
+
+cgitb.enable()
 
 import home.generateUserAccountPage  # the function that generates the user's page after successful login
 
