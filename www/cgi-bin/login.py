@@ -56,7 +56,7 @@ def main():
 		generateUserAccountPage(username)
 
 	else:  # redirect back to the login page with a name-value pair
-		print "Location: login.html?status=failed"
+		print "Location: ../login.html?status=failed"
 
 
 

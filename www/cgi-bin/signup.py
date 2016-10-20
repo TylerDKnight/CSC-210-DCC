@@ -60,9 +60,7 @@ if(dupliCheck(username)):
     generateUserAccountPage(username)
 
 else:
-    
-    tryAgain = "/create_account.html?status=failed"
-    print 'Location: %s' % tryAgain
+    print 'Location: ../create_account.html?status=failed'
    
 
 

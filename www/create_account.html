@@ -12,7 +12,9 @@
 </head>
 
 <body>
+	<!--
 	<script>  // adds error message if username is taken
+			// this script should be replaced with an ajax lookup
 		$(function() {
 			if (window.location.href.indexOf("status=failed") != -1) {
 				// the name-value pair is in the url: add the failure message
@@ -22,6 +24,7 @@
 			}
 		});
 	</script>
+	-->
 
 	<h1>Create Account</h1>
 	<p id="account-creation-error" class="error">
@@ -30,13 +33,16 @@
 		<input type="text" name="username" id="username" class="vertical-form-input">
 		<label for="password">Password: </label>
 		<input type="password" name="password" id="password" class="vertical-form-input">
+		<label for="confirm-password">Confirm Password: </label>
+		<input type="password" name="confirm-password" id="confirm-password" class="vertical-form-input">
 		<input type="submit" value="Create Account">
 	</form>
 	<p id="username-error" class="error"></p>
 	<p id="password-error" class="error"></p>
+	<!--
 	<script>
 		$(function() {
-			$('#login').submit(function(event) {
+			$('#account_info').submit(function(event) {
 				var pswd = $('#password').val()
 				if ($('#username').val() === "") {
 					$('#username-error').text("Username field is empty.");
@@ -53,7 +59,8 @@
 			});
 		});
 	</script>
-
+	-->
+	<script src="js/signup_extreme_vetting.js"></script>
 </body>
 
 </html>
