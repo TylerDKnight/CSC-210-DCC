@@ -12,6 +12,8 @@
 </head>
 
 <body>
+	<?php include "inc/header_not_logged.inc"; ?>
+
 	<script>  // adds error message if login was not successful
 		$(function() {
 			if (window.location.href.indexOf("status=failed") != -1) {
@@ -23,20 +25,23 @@
 		});
 	</script>
 
-	<h1>Login</h1>
-	<p id="login-error" class="error"></p>
-	<form id="login" method="post" action="cgi-bin/login.py">
-		<label for="username">Username: </label>
-		<input type="text" name="username" id="username" class="vertical-form-input">
+	<div class="content">
+		<h1>Login</h1>
+		<p id="login-error" class="error"></p>
+		<form id="login" method="post" action="cgi-bin/login.py">
+			<label for="username">Username: </label>
+			<input type="text" name="username" id="username" class="vertical-form-input">
 
-		<label for="password">Password: </label>
-		<input type="password" name="password" id="password" class="vertical-form-input">
+			<label for="password">Password: </label>
+			<input type="password" name="password" id="password" class="vertical-form-input">
 
-		<input type="submit" value="Login">
-	</form>
-	<!-- error messages to be set if there is an error -->
-	<p id="username-error" class="error"></p>
-	<p id="password-error" class="error"></p>
+			<input type="submit" value="Login">
+		</form>
+		<!-- error messages to be set if there is an error -->
+		<p id="username-error" class="error"></p>
+		<p id="password-error" class="error"></p>
+	</div>  <!-- content -->
+
 
 	<script>
 		$(function() {
@@ -57,6 +62,15 @@
 			});
 		});
 	</script>
+
+	<script src="js/nav-handler.js"></script>
+	<script src="js/menu-highlighter.js"></script>  <!-- defines the function highlightMenuItemFromId(id_no_hashtag) -->
+
+	<script>
+
+	highlightMenuItemFromId("nav-login");
+
+	</script>  <!-- call the previously defined function -->
 
 </body>
 
