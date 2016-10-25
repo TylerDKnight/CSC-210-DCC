@@ -5,7 +5,7 @@ import cgitb
 import mysql.connector
 import hashlib
 
-import home.generateUserAccountPage  # function creating the home page
+from home import generateUserAccountPage  # function creating the home page
 
 cgitb.enable()
 
@@ -22,15 +22,15 @@ def authenticate(username, password):
 	cursor = conn.cursor()
 
 	# get user from database
-	cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+	data = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
 
-	if cursor.arraysize != 1:  # no such username exists (usernames are unique)
+	if data.rowcount != 1:  # no such username exists (usernames are unique)
 		cursor.close()
 		conn.close()
 		return False
 
 	else:
-		user = cursor.next()
+		user = data.next()
 		encrypted = user[1]
 		salt = user[2]
 
@@ -56,7 +56,7 @@ def main():
 		generateUserAccountPage(username)
 
 	else:  # redirect back to the login page with a name-value pair
-		print "Location: login.html?status=failed"
+		print "Location: ../login.html?status=failed"
 
 
 

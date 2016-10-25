@@ -55,14 +55,18 @@ nav ul {
 }
 
 .content {  /* offers padding to the content of the page (body has no padding as it affects the header) */
-	padding: 0 15px 15px 15px;
+	padding: 0 30px 30px 30px;
 	max-width: 760px;
 	margin: 0 auto;
 }
 
 .error {
-	font-weight: bold;
+	font-size: 10pt;
 	color: red;
+}
+
+.italic {
+	font-style: italic;
 }
 
 #ocean-logo {
