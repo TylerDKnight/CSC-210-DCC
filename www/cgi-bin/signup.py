@@ -1,4 +1,4 @@
-#!!/usr/bin/env python
+#!/usr/bin/env python
 
 
 #CC
@@ -8,9 +8,12 @@ import mysql.connector
 import hashlib
 import datetime
 
+import home.generateUserAccountPage  # the function that generates the user's page after successful login
+
+
 cgitb.enable()
 
-import home.generateUserAccountPage  # the function that generates the user's page after successful login
+
 
 def insert_user(username, password):
     salt = str(datetime.datetime.now())
