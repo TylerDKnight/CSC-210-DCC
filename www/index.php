@@ -15,12 +15,10 @@
 	<?php include "inc/header_not_logged.inc"; ?>
 
 	<div class="content">
-			<h1 id=ocean-logo>Welcome to Ocean!</h1>
+		<h1>Welcome to Ocean!</h1>
 		<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience.  Click the link above to log in, or if you've never been here before, create an account and start exploring the seven seas in seconds!</p>
-		<a href="login.php">Get Started</a><br/>
-		<a href="create_account.php">Log In</a><br/>
-		<a href="learn_more.php">Learn More</a>
 	</div>  <!-- content -->
+
 	<script src="js/nav-handler.js"></script>
 </body>
 
