@@ -34,8 +34,6 @@
 		<p>Currently, Ocean doesn't have that many features, and basically consists only of a login and 
 			a page where users can create accounts.  More on this later.</p>
 
-		<a href="index.php">Return</a>
-
 	</div>  <!-- content -->
 	<script src="js/nav-handler.js"></script>
 	<script src="js/menu-highlighter.js"></script>  <!-- defines the function highlightMenuItemFromId(id_no_hashtag) -->
