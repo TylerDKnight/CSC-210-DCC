@@ -54,6 +54,10 @@ nav ul {
 
 }
 
+a {
+	color: #000066;
+}
+
 .content {  /* offers padding to the content of the page (body has no padding as it affects the header) */
 	padding: 0 30px 30px 30px;
 	max-width: 760px;

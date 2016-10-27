@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="DCC, Inc.">
+	<link rel="stylesheet" type="text/css" href="css/dccstyles.css">
+	<!-- add jquery -->
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<title>Login</title>
+</head>
+
+<body>
+	<script>  // adds error message if login was not successful
+		$(function() {
+			if (window.location.href.indexOf("status=failed") != -1) {
+				// the name-value pair is in the url: add the failure message
+				$('#login-error').text("Error: username or password is incorrect.  Please try again.").addClass("error")
+			} else {
+				$('#login-error').text("");
+			}
+		});
+
+		$(function() {
+			$('#login').submit(function(event) {
+				var username_error = $('#username-error');
+				var password_error = $('#password-error');
+				var username_taken_error = $('#username-taken-error');
+				if ($('#username').val() === "") {  // field is empty
+					username_error.text("Username field is empty.").addClass("error");
+					event.preventDefault();  // stop form from being submitted
+				} else {
+					username_error.text("");
+				}
+
+				if ($('#password').val() === "") {
+					password_error.text("Password field is empty.").addClass("error");
+					event.preventDefault();
+				} else {
+					password_error.text("");
+				}
+
+				if (!checkUsernameAvailible()) {
+					username_taken_error.text("Username is already taken.").addClass("error");
+				}
+
+			});
+		});
+
+		var checkUsernameAvailible = function(){
+
+		};
+
+	</script>
+
+	<h3><u>Make a new account</u></h3>
+	<form id="login" method="post" action="/cgi-bin/login.py">
+		<label for="username">Username: </label>
+		<input type="text" name="username" id="username" class="vertical-form-input">
+
+		<label for="password">Password: </label>
+		<input type="password" name="password" id="password" class="vertical-form-input">
+
+		<label for="password">Confirm Password: </label>
+		<input type="password" name="password" id="password" class="vertical-form-input">
+
+		<input type="submit" value="Create Account">
+	</form>
+	<!-- error messages to be set if there is an error -->
+	<p id="login-error"></p>
+	<p id="username-taken-error"></p>
+	<p id="username-error"></p>
+	<p id="password-error"></p>
+</body>
+
+</html>
+
