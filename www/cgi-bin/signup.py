@@ -7,9 +7,10 @@ import cgi
 import mysql.connector
 import hashlib
 import datetime
-from home import generateUserAccountPage  # the function that generates the user's page after successful login
 
 cgitb.enable()
+
+import home.generateUserAccountPage  # the function that generates the user's page after successful login
 
 def insert_user(username, password):
     salt = str(datetime.datetime.now())
@@ -42,8 +43,8 @@ def dupliCheck(username):
                                database='WebApp')
     cursor = conn.cursor()
 
-    a = cursor.execute("SELECT * FROM users WHERE username=?", [username])
-    if cursor.rowcount >= 1:
+    a = cursor.execute("SELECT * FROM pizza_orders WHERE username=?", [username])
+    if (len(a) >= 1):
         return false
     return true
 
@@ -54,7 +55,7 @@ form = cgi.FieldStorage()
 username = form['username'].value
 password = form['password'].value
 
-if dupliCheck(username):
+if(dupliCheck(username)):
     insert_user(username, password)
     generateUserAccountPage(username)
 

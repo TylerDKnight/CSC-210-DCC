@@ -5,7 +5,7 @@ import cgitb
 import mysql.connector
 import hashlib
 
-from home import generateUserAccountPage  # function creating the home page
+import home.generateUserAccountPage  # function creating the home page
 
 cgitb.enable()
 
@@ -22,15 +22,15 @@ def authenticate(username, password):
 	cursor = conn.cursor()
 
 	# get user from database
-	data = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+	cursor.execute('SELECT * FROM users WHERE username = %s', [username])
 
-	if data.rowcount != 1:  # no such username exists (usernames are unique)
+	if cursor.arraysize != 1:  # no such username exists (usernames are unique)
 		cursor.close()
 		conn.close()
 		return False
 
 	else:
-		user = data.next()
+		user = cursor.next()
 		encrypted = user[1]
 		salt = user[2]
 

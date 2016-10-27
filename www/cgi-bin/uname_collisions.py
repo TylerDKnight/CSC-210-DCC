@@ -14,9 +14,9 @@ def checkForCollisionsText(username):
 								host='127.0.0.1', database='WebApp')
 	cursor = conn.cursor()
 
-	data = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+	cursor.execute('SELECT * FROM users WHERE username = %s', [username])
 
-	if data.rowcount > 0:  # username already exists
+	if cursor.arraysize > 0:  # username already exists
 		return 'collision'
 	else return 'ok'
 
