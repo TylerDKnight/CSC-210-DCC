@@ -26,19 +26,23 @@
 	</script>
 	-->
 
-	<h1>Create Account</h1>
-	<p id="account-creation-error" class="error">
-	<form method="post" id="account_info" action="cgi-bin/signup.py">
-		<label for="username">Username: </label>
-		<input type="text" name="username" id="username" class="vertical-form-input">
-		<label for="password">Password: </label>
-		<input type="password" name="password" id="password" class="vertical-form-input">
-		<label for="confirm-password">Confirm Password: </label>
-		<input type="password" name="confirm-password" id="confirm-password" class="vertical-form-input">
-		<input type="submit" value="Create Account">
-	</form>
-	<p id="username-error" class="error"></p>
-	<p id="password-error" class="error"></p>
+	<?php include "inc/header_not_logged.inc"; ?>
+
+	<div class="content">
+		<h1>Create Account</h1>
+		<p id="account-creation-error" class="error">
+		<form method="post" id="account_info" action="cgi-bin/signup.py">
+			<label for="username">Username: </label>
+			<input type="text" name="username" id="username" class="vertical-form-input">
+			<label for="password">Password: </label>
+			<input type="password" name="password" id="password" class="vertical-form-input">
+			<label for="confirm-password">Confirm Password: </label>
+			<input type="password" name="confirm-password" id="confirm-password" class="vertical-form-input">
+			<input type="submit" value="Create Account">
+		</form>
+		<p id="username-error" class="error"></p>
+		<p id="password-error" class="error"></p>
+	</div>  <!-- content -->
 	<!--
 	<script>
 		$(function() {
@@ -61,6 +65,15 @@
 	</script>
 	-->
 	<script src="js/signup_extreme_vetting.js"></script>
+	<script src="js/nav-handler.js"></script>
+	<script src="js/menu-highlighter.js"></script>  <!-- defines the function highlightMenuItemFromId(id_no_hashtag) -->
+
+	<script>
+
+	highlightMenuItemFromId("nav-create-account");
+
+	</script>  <!-- call the previously defined function -->
+
 </body>
 
 </html>
