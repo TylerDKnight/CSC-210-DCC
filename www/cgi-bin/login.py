@@ -2,12 +2,12 @@
 
 import cgi
 import cgitb
-import sqlite3
+import mysql.connector
 import hashlib
 
-cgitb.enable()
+from home import generateUserAccountPage  # function creating the home page
 
-account_data = cgi.FieldStorage()
+cgitb.enable()
 
 def authenticate(username, password):
 	'''
@@ -18,18 +18,19 @@ def authenticate(username, password):
 	'''
 
 	# set up connection and get cursor
-	conn = sqlite3.connect('users.db')
+	conn = mysql.connector.connect(user='webConn', password='pass', host='127.0.0.1', database='WebApp')
 	cursor = conn.cursor()
 
 	# get user from database
-	users = cursor.execute('SELECT * FROM users WHERE username = ?', [username])
+	data = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
 
-	if users.arraysize != 1:  # no such username exists (usernames are unique)
+	if data.rowcount != 1:  # no such username exists (usernames are unique)
+		cursor.close()
 		conn.close()
 		return False
 
 	else:
-		user = users.next()
+		user = data.next()
 		encrypted = user[1]
 		salt = user[2]
 
@@ -41,33 +42,21 @@ def authenticate(username, password):
 		# compute the hash
 		digest = hasher.hexdigest()
 
+		cursor.close()
 		conn.close()
 		return digest == encrypted
 
 def main():
 	# get the user data from the sent form
 	login_data = cgi.FieldStorage()
-	username = login_form['username'].value
-	password = login_form['pass'].value
+	username = login_data['username'].value
+	password = login_data['pass'].value
 
 	if authenticate(username, password):
-		print '''
-		Content-type: text/html\r\n\r\n
-		<html lang="en-us">
-		<head>
-			<meta charset="utf-8">
-			<meta name="author" content="DCC, Inc.">
-			<link rel="stylesheet" href="css/dccstyles.css">
-			<title>Message In A Bottle</title>
-		</head>
-		<body>
-		'''
-		print '<p>Welcome, ' + username + '!'
-		# probably more to add here, idk
-		print '</body> </html>'
+		generateUserAccountPage(username)
 
 	else:  # redirect back to the login page with a name-value pair
-		print "Location: login.html?status=failed"
+		print "Location: ../login.html?status=failed"
 
 
 
