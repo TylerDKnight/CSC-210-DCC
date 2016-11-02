@@ -1,3 +1,4 @@
+#!C:/Python27/python.exe
 '''
 Script forming the page if user successfully authenticated.
 
@@ -19,4 +20,4 @@ def generateUserAccountPage(username):
 	'''
 	print '	<title>' + username + ' - Home</title> </head>'
 	print '<body>'
-	print '<h1>Welcome, ' + username + '!</h1> </body> </html>'
+	print '<h1>Welcome, ' + username + '!</h1>\n <p><a href="/index.php">Return to Homepage</a> </p> </body> </html>'
