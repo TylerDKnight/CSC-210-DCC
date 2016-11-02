@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!C:/Python27/python.exe
 
 import cgi
 import cgitb
@@ -18,7 +18,8 @@ def checkForCollisionsText(username):
 
 	if data.rowcount > 0:  # username already exists
 		return 'collision'
-	else return 'ok'
+	else:
+                return 'ok'
 
 def main():
 	print "Content-type: text/plain; charset=UTF-8\r\n\r\n"  # alls we need to send is one value

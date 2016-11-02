@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!C:/Python27/python.exe
 
 import cgi
 import cgitb
@@ -10,27 +10,34 @@ from home import generateUserAccountPage  # function creating the home page
 cgitb.enable()
 
 def authenticate(username, password):
-	'''
-	Authenticates a password encrypted with timestamp using sha256
-	encryption connected to a unique username.  Should return false
-	if the username does not exist or if the password does not match
-	records.
-	'''
+	#'''
+	#Authenticates a password encrypted with timestamp using sha256
+	#encryption connected to a unique username.  Should return false
+	#if the username does not exist or if the password does not match
+	#records.
+	#'''
 
 	# set up connection and get cursor
-	conn = mysql.connector.connect(user='webConn', password='pass', host='127.0.0.1', database='WebApp')
-	cursor = conn.cursor()
+	conn = mysql.connector.connect(user='this', database='Ocean')
+	cursor = conn.cursor(buffered=True)
 
 	# get user from database
-	data = cursor.execute('SELECT * FROM users WHERE username = %s', [username])
+	query = ("SELECT * FROM Users "
+        "WHERE UserName='" + username+ "'")
+	
+	cursor.execute(query)
 
-	if data.rowcount != 1:  # no such username exists (usernames are unique)
+	if cursor.rowcount < 1:  # no such username exists (usernames are unique)
+                #print (cursor._last_executed)
 		cursor.close()
 		conn.close()
 		return False
 
 	else:
-		user = data.next()
+                
+		user = cursor.next()
+		#print(user)
+		#print("are in User")
 		encrypted = user[1]
 		salt = user[2]
 
@@ -44,19 +51,26 @@ def authenticate(username, password):
 
 		cursor.close()
 		conn.close()
+		#print(digest + "\n")
+		#print("               BREAKKKK            ")
+		#print(salt + "\n")
 		return digest == encrypted
 
 def main():
+       
 	# get the user data from the sent form
 	login_data = cgi.FieldStorage()
 	username = login_data['username'].value
-	password = login_data['pass'].value
+	password = login_data['password'].value
 
 	if authenticate(username, password):
 		generateUserAccountPage(username)
 
 	else:  # redirect back to the login page with a name-value pair
-		print "Location: ../login.html?status=failed"
+		#print "Location: ../login.html?status=failed"
+
+                 print("Content-type: text/html\n\n")
+                 print("Authentication Failed")
 
 
 
