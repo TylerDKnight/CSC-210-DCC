@@ -21,7 +21,7 @@ $(function() {
 
 	$('#account_info').submit(function(event) {
 		username_check(event, true);  // stop event if uname is taken
-		password_check(event, true, $('#password'));  // it does not matter which pswd field gets passed in
+		password_check(event, true, $('#password'));  // it does not really matter which pswd field gets passed in
 	});
 });  // document ready
 
@@ -62,49 +62,31 @@ var username_check = function(event, preventDefault) {
 	}
 };
 
-
-var containsRequiredChars = function(pswd, chars) {
-	// where pswd is the password and chars a string containing required chars
-	// checks if pswd contains ANY of the chars
-	for (i=0; i<pswd.length; i++) {
-		if (chars.indexOf(pswd.charAt(i)) != -1) {  // the selected char of pswd is required
-			return true;
-		}
-	}
-	return false;  // no required character has been found
-};
-
-
 var password_check = function(event, preventDefault, $field) {
 	// allow for the function to prevent the default action for an event if possible
 	// $field should be the jquery obj representing the field to check, either password or confirm-password
 
-	var pswd = $field.val();
+	var pswd = $field.val();  // password entered in whichever password field is of interest
 	var $pswd_err = $('#password-error');
-	
+	var pswd_regex = /^(?:(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[,.\/\\\[\]\-{}|+=_!@#$%^&*()~`<>?'"]).{8,})|(.{18,})$/;
+	/* 
+	 * (at least one uppercase, lowercase, digit and symbol and 8 or more characters long) OR (at least 18
+	 * characters long, to allow for strong passwords like those that RStJ suggested (series of random words
+	 * strung together)
+	 */
 
-	if (pswd === '') {
-		$pswd_err.text('Password field is empty.');
+	if (pswd_regex.test(pswd) === false) {
+		$pswd_err.text('Password must either be 8 or more characters long and contain an uppercase letter, '+
+		 'lowercase letter, digit and special character or be 18 or more characters long.');  // error msg
 		if (preventDefault === true) {
-			event.preventDefault();
+			event.preventDefault();  // stop form from being submitted, if necessary
 		}
 	}
 
-	else if (pswd.length < 8 || !containsRequiredChars(pswd, '!@#$%^&*()-_=+[]{}\\|"\':;<>,./?`~') ||
-		!containsRequiredChars(pswd, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') || !containsRequiredChars(pswd,
-			'abcdefghijklmnopqrstuvwxyz') || !containsRequiredChars(pswd, '1234567890')) {
-			// is too short or lacks a character from any of the groups of required chars
-		$pswd_err.text('Password must be at least 8 characters in length and contain one digit, one uppercase' +
-			'letter, one lowercase letter and one special character (which can be any of ' +
-				'!@#$%^&*()-_=+[]{}\\|"\':;<>,./?`~).');
-		if (preventDefault === true) {
-			event.preventDefault();
-		}
-	}
-	else if ($('#password').val() != $('#confirm-password').val()) {  // password is correct but does not match confirmation
+	else if ($('#password').val() != $('#confirm-password').val()) {
 		$pswd_err.text('Password fields do not match.');
 		if (preventDefault === true) {
-			event.preventDefault();
+			event.preventDefault();  // stop form from being submitted, if necessary
 		}
 	}
 
