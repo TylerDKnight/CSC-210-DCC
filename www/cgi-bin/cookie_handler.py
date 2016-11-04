@@ -1,9 +1,9 @@
-'''
-This file is for checking and creating cookies.
 
-There are currently a method for generating and reading cookie headers
-that keep users logged in.
-'''
+#This file is for checking and creating cookies.
+
+#There are currently a method for generating and reading cookie headers
+#that keep users logged in.
+
 import Cookie
 import datetime
 import os
