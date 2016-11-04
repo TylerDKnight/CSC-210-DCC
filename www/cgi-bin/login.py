@@ -1,4 +1,4 @@
-#!C:/Python27/python.exe
+#!/usr/bin/python2.7
 
 import cgi
 import cgitb
