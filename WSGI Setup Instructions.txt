@@ -1,0 +1,29 @@
+These instructions should set up WSGI to run at the location the files are in in the repo
+
+
+1. Include the wsgi package in your AMPPS Apache conf file LoadModule section
+
+	LoadModule wsgi_module modules/mod_wsgi.so
+
+
+
+2. Make a WSGIScriptAlias
+
+	WSGIScriptAlias / "{$path}/path/to/site.py"
+
+
+
+3. Make a WSGIPythonPath, to ensure no strange importing behaviors.  This can go directly below the WSGIScriptAlias, and to be safe it should be an absolute path.
+
+	WSGIPythonPath "absolute/path/to/wsgi_scripts/"
+
+
+
+4. Add a Directory for the directory containing the script file, because it is outside the document root
+
+	<Directory "{$path}/path/to/wsgi_scripts">
+	    Options FollowSymLinks Indexes
+	    AllowOverride All
+	    Order deny,allow
+	    allow from All
+	</Directory>
