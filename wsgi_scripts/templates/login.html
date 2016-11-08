@@ -1,0 +1,57 @@
+{% extends 'basic_page.html' %}
+
+{% set handle_navbar = True %}
+{% set jquery = True %}
+
+{% block title %}Ocean - Login{% endblock %}
+
+
+{% block header %}{% include 'header_not_logged.inc' %}{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+{% if failed == 'failed' %}
+<p id="login-error" class="error">Error: username or password is incorrect.  Please try again.</p>
+{% endif %}
+<form id="login" method="POST" action="{{ url_for('user_auth.login_processing') }}">
+	<label for="username">Username: </label>
+	<input type="text" name="username" id="username" class="vertical-form-input">
+
+	<label for="password">Password: </label>
+	<input type="password" name="password" id="password" class="vertical-form-input">
+
+	<input type="submit" value="Login">
+</form>
+<!-- error messages to be set if there is an error -->
+<p id="username-error" class="error"></p>
+<p id="password-error" class="error"></p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	$(function() {
+		$('#login').submit(function(event) {
+			if ($('#username').val() === "") {  // field is empty
+				$('#username-error').text("Username field is empty.");
+				event.preventDefault();  // stop form from being submitted
+			} else {
+				$('#username-error').text("");
+			}
+
+			if ($('#password').val() === "") {
+				$('#password-error').text("Password field is empty.");
+				event.preventDefault();
+			} else {
+				$('#password-error').text("");
+			}
+		});
+	});
+</script>
+{% endblock %}
+
+
+
+
+
+
+
