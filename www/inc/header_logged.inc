@@ -8,6 +8,12 @@
 	</div> <!-- ocean-logo -->
 	<nav>
 		<ul>
+			<?php
+	if (!empty($_GET['act'])) {
+		setcookie("previous_login", " ", time() - 3600);
+		header("Refresh:0");
+	} else { }
+ ?>
 			 <form action="index.php" method="get">
 				<input type="hidden" name="act" value="run">
 				<input type="submit" value="Logout">
