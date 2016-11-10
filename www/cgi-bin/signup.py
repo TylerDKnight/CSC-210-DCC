@@ -7,6 +7,10 @@ import cgi
 import mysql.connector
 import hashlib
 import datetime
+import Cookie
+import datetime
+import os
+
 from home import generateUserAccountPage  # the function that generates the user's page after successful login
 from mysql.connector import errorcode
 
@@ -90,6 +94,7 @@ password = form['password'].value
 
 if dupliCheck(username):
     insert_user(username, password)
+    cookie_handler.generateLoginCookieHeader()
     generateUserAccountPage(username)
 
 else:
