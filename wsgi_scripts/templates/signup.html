@@ -1,0 +1,28 @@
+{% extends 'basic_page.html' %}
+
+{% set jquery = True %}
+{% set handle_navbar = True %}
+
+{% block title %}Ocean - Create Account{% endblock %}
+
+{% block header %}{% include 'header_not_logged.inc' %}{% endblock %}
+
+{% block content %}
+<h1>Create Account</h1>
+<p id="account-creation-error" class="error">
+<form method="post" id="account_info" action="{{ url_for('signup') }}">
+	<label for="username">Username: </label>
+	<input type="text" name="username" id="username" class="vertical-form-input">
+	<label for="password">Password: </label>
+	<input type="password" name="password" id="password" class="vertical-form-input">
+	<label for="confirm-password">Confirm Password: </label>
+	<input type="password" name="confirm-password" id="confirm-password" class="vertical-form-input">
+	<input type="submit" value="Create Account">
+</form>
+<p id="username-error" class="error"></p>
+<p id="password-error" class="error"></p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/signup_extreme_vetting.js') }}"></script>
+{% endblock %}
