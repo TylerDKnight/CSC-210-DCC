@@ -22,12 +22,7 @@
 		
 		include "inc/header_not_logged.inc";
 } ?>
-	<?php
-	if (!empty($_GET['act'])) {
-		setcookie("previous_login", " ", time() - 3600);
-		header("Refresh:0");
-	} else { }
- ?>
+
 	
 
 	<script src="js/nav-handler.js"></script>
