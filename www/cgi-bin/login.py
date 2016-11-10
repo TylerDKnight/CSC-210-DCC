@@ -3,7 +3,11 @@
 import cgi
 import cgitb
 import mysql.connector
+import Cookie
 import hashlib
+import datetime
+import os
+import cookie_handler
 
 from home import generateUserAccountPage  # function creating the home page
 
@@ -64,6 +68,7 @@ def main():
 	password = login_data['password'].value
 
 	if authenticate(username, password):
+                cookie_handler.generateLoginCookieHeader(username)
 		generateUserAccountPage(username)
 
 	else:  # redirect back to the login page with a name-value pair
