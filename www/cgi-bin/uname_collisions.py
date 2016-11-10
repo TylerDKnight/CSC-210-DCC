@@ -10,7 +10,7 @@ cgitb.enable()
 def checkForCollisionsText(username):
 
 	# query the database and check if the value is there
-	conn = mysql.connector.connect(user='webConn', passwprd='pass',
+	conn = mysql.connector.connect(user='webConn', password='pass',
 								host='127.0.0.1', database='WebApp')
 	cursor = conn.cursor()
 
@@ -19,7 +19,7 @@ def checkForCollisionsText(username):
 	if data.rowcount > 0:  # username already exists
 		return 'collision'
 	else:
-                return 'ok'
+    	return 'ok'
 
 def main():
 	print "Content-type: text/plain; charset=UTF-8\r\n\r\n"  # alls we need to send is one value

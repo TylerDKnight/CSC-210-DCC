@@ -20,4 +20,4 @@ def generateUserAccountPage(username):
 	'''
 	print '	<title>' + username + ' - Home</title> </head>'
 	print '<body>'
-	print '<h1>Welcome, ' + username + '!</h1>\n <p><a href="/index.php">Return to Homepage</a> </p> </body> </html>'
+	print '<h1>Welcome, ' + username + '!</h1>\n <p><a href="/index.php">Click Here to get started sending bottles</a> </p> </body> </html>'

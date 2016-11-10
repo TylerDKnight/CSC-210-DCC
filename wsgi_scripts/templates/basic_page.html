@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="DCC, Inc.">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dccstyles.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+	{% if jquery == True %}
+	<script src="{{ url_for('static', filename='js/jquery-3.1.1.js') }}"></script>  <!-- add jquery if required -->
+
+	{% endif %}
+	<title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+	{% block header %}{% endblock %}
+
+	<div class="content">{% block content %}{% endblock %}</div>
+
+	{% block footer %}{% endblock %}
+
+	{% if handle_navbar == True %}  {# nav handler scripts included automatically #}
+		<script src="{{ url_for('static', filename='js/nav-handler.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/menu-highlighter.js') }}"></script>
+		{% if nav_menu_item_id != None %}
+			<script>
+			highlightMenuItemFromId("{{ nav_menu_item_id }}");
+			</script>
+		{% endif %}
+	{% endif %}
+
+	{% block scripts %}{% endblock %}
+</body>
+
+</html>
+

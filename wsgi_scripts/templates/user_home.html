@@ -1,0 +1,14 @@
+{% extends 'basic_page.html' %}
+
+{% set jquery = True %}
+{% set handle_nav = True %}
+
+{% block title %}Ocean - Home{% endblock %}
+
+
+{% block header %}{% include 'header_logged.inc' %}{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{uname}}!</h1>
+{% endblock %}
+

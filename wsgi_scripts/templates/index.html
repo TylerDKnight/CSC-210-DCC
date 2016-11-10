@@ -1,0 +1,19 @@
+{% extends 'basic_page.html' %}
+{# The above line indicates that this template is itself the "child" of #}
+{# another template which it uses as a "blueprint". #}
+
+{% set jquery = True %}
+{% set handle_navbar = True %}
+
+{% block title %}Ocean - Welcome!{% endblock %}
+{# The context of lines such as this one can be gleaned by looking at the "parent" template (basic_page.html) #}
+
+
+{% block header %}{% include 'header_not_logged.inc' %}{% endblock %}
+
+{% block content %}
+<h1>Welcome to Ocean!</h1>
+<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience.  Click the link
+	above to log in, or if you've never been here before, create an account and start exploring the
+	seven seas in seconds!</p>
+{% endblock %}
