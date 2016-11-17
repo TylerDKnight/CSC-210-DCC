@@ -3,7 +3,7 @@
 
 import cgi
 import cgitb
-# import mysql.connector
+import mysql.connector
 import Cookie
 import hashlib
 import datetime
@@ -12,7 +12,7 @@ import cookie_handler
 
 from home import generateUserAccountPage  # function creating the home page
 
-# cgitb.enable()
+cgitb.enable()
 
 def authenticate(username, password):
 	#'''

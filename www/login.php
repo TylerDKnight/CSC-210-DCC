@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/dccstyles.css">
 	<link rel="shortcut icon" href="images/favicon.png">
 	<!-- add jquery -->
-	<!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<title>Login</title>
 </head>
 
