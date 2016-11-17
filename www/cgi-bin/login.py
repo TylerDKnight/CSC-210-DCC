@@ -1,8 +1,9 @@
 #!/usr/bin/python2.7
+#HASHBANG CHANGED FOR LINUX COMPATIBILITY
 
 import cgi
 import cgitb
-import mysql.connector
+# import mysql.connector
 import Cookie
 import hashlib
 import datetime
@@ -11,7 +12,7 @@ import cookie_handler
 
 from home import generateUserAccountPage  # function creating the home page
 
-cgitb.enable()
+# cgitb.enable()
 
 def authenticate(username, password):
 	#'''
@@ -22,7 +23,7 @@ def authenticate(username, password):
 	#'''
 
 	# set up connection and get cursor
-	conn = mysql.connector.connect(user='this', database='Ocean')
+	conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 	cursor = conn.cursor(buffered=True)
 
 	# get user from database
@@ -68,14 +69,17 @@ def main():
 	password = login_data['password'].value
 
 	if authenticate(username, password):
-                cookie_handler.generateLoginCookieHeader(username)
-		generateUserAccountPage(username)
+		cookie_handler.generateLoginCookieHeader(username)
+		# generateUserAccountPage(username)
+		print("Content-type: text/html\n\n")
+		print("true")
 
 	else:  # redirect back to the login page with a name-value pair
 		#print "Location: ../login.html?status=failed"
 
-                 print("Content-type: text/html\n\n")
-                 print("Authentication Failed")
+		print("Content-type: text/html\n\n")
+		# print("Authentication Failed")
+		print("false")
 
 
 
