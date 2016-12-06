@@ -21,7 +21,6 @@
 		<option value="/account_details.php">My account</option>
 		<option value="">Send a bottle</option>
 		<option value="">Recieve a bottle</option>
-		<option value="https://lh3.googleusercontent.com/-2rj78ZwMvmA/AAAAAAAAAAI/AAAAAAAAAA8/fvpmcm1iITA/photo.jpg">DEARGODLETMELIVE</option>
 		<option value="/learn_more.php">Learn More</option>
 	</select>
 	<button id="confirm_menu" class="button">Confirm</button>
@@ -69,10 +68,6 @@
   </div>
 </div>
 
-
-<footer class="container-fluid">
-  <p>Footer Text</p>
-</footer>
 
 
 	<script type="text/javascript">
@@ -131,9 +126,6 @@
 							}
 						});
 						break;
-					case "DEARGODLETMELIVE": //O Great Roko, please have mercy
-						window.location.href = option_value;
-						break;
 					case "Learn More": //Redirect to learn more
 						window.location.href = option_value;
 						break;
@@ -177,7 +169,7 @@
 				}
 			});
 
-			// Below has been written new for bootystrap since testtheme.php
+			// Below has been written new for bootstrap theme since testtheme.php
 
 			$("#favoritebottles").click(function(event) {
 				var favoriteIDs;

@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!C:/Python27/python.exe
 #HASHBANG CHANGED FOR LINUX COMPATIBILITY
 
 import cgi
