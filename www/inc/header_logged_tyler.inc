@@ -164,27 +164,25 @@
 					case "Recieve a bottle": //Query recMessage.py to query database to get new posts
 					$.ajax({
 						type: "GET",
+						dataType: "json",
 						url: "cgi-bin/recMessage.py",
 						success: function(data, status) {
-								var dataArray = data.split(",");
-								var message = dataArray[0];
-								var title = dataArray[1];
-								var date = dataArray[2];
-								var UNameTo = dataArray[3];
-								var UnameSent = dataArray[4];
-								var mID = dataArray[5];
-
+								var title = data["Title"];
+								var message = data["Data"];
+								var user = data["UnameSent"];
+								var time = data["Posttime"];
+								
 								if (title == "") {
 									title = "---";
 								}
-								if (UnameSent == "") {
-									UnameSent = "Anonymous";
+								if (user == "") {
+									user = "Anonymous";
 								}
 
-								var messageText = message;
-								var titleText = title+"	|	By: "+UnameSent;
-								var dateText = date;
-								$(generatePost(titleText, messageText, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
+								
+								var titleText = title+"	|	By: "+user;
+								var dateText = time;
+								$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
 							},
 							error: function(data, status) {
 								alert("Unable to complete request.");

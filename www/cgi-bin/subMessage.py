@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/local/bin/python
 #HASHBANG CHANGED FOR LINUX COMPATIBILITY
 
 import cgi
@@ -32,7 +32,7 @@ if (anon == "false" or anon == "False"):
 	username = cookie_handler.readLoginCookieHeader()
 else:
 	username = ""
-conn = mysql.connector.connect(user='this', database='Ocean', user='DCC', password='abcd')
+conn = mysql.connector.connect(user='DCC', database='Ocean', password='abcd')
 cursor = conn.cursor()
 add_Message = ("""INSERT INTO Messages
         (Data, Title, Posttime, UnameSent)
@@ -46,4 +46,6 @@ cursor.close()
 conn.close()
 
 print("Content-type: text/html\n\n")
+print 
+
 print("Message Submitted"+" anon is: "+anon)
