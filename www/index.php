@@ -11,17 +11,21 @@
 	<title>Ocean - Welcome!</title>
 </head>
 
-<body>
-	<?php include "inc/header_not_logged.inc"; ?>
 
-	<div class="content">
-		<h1>Welcome to Ocean!</h1>
-		<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience.  Click the link above to log in, or if you've never been here before, create an account and start exploring the seven seas in seconds!</p>
-	</div>  <!-- content -->
+
+<body>
+	<?php
+	$cookie_name = "previous_login";
+	if(isset($_COOKIE[$cookie_name])) {
+		include "inc/header_logged.inc";
+	} else {
+		
+		include "inc/header_not_logged.inc";
+} ?>
+
+	
 
 	<script src="js/nav-handler.js"></script>
 </body>
 
 </html>
-
-

@@ -8,7 +8,7 @@ import Cookie
 import datetime
 import os
 
-cookie_time_string = "%a, %d-%b-%Y %T UTC"  # string for formatting a cookie
+cookie_time_string = "%a, %d %b %Y %H:%M:%S GMT"  # string for formatting a cookie
 login_cookie_expiration_days = 30  # number of days until login cookie expires from date last sent
 
 
@@ -20,10 +20,10 @@ def generateLoginCookieHeader(username):
 	cookie['previous_login'] = username
 	cookie['previous_login']['path'] = '/'
 	# make the expiration date
-	cookie['previous_login']['expires'] = 
-	(datetime.datetime.utcnow() + 
-		datetime.timedelta(login_cookie_expiration_days)).strftime(cookie_time_string)
-	cookie['previous_login']['httponly'] = True  # stop client-side scripts from accessing cookie
+	expDate = datetime.datetime.utcnow() + datetime.timedelta(days=login_cookie_expiration_days)
+	cookie['previous_login']['expires'] = expDate.strftime(cookie_time_string)
+	cookie['previous_login']['httponly'] = False  # stop client-side scripts from accessing cookie
+	print(cookie)
 
 
 def readLoginCookieHeader():  
@@ -33,5 +33,6 @@ def readLoginCookieHeader():
 	cookie = Cookie.SimpleCookie(stored_cookie_string)
 	if 'previous_login' in cookie:  # ckeck if the cookie has been sent
 		return cookie['previous_login'].value
-	else return ''  # empty username cannot happen, and thus clearly indicates failure
+	else:
+                return ''  # empty username cannot happen, and thus clearly indicates failure
 
