@@ -1,4 +1,4 @@
-#!C:/Python27/python.exe
+#!/usr/bin/python2.7
 
 
 #CC
@@ -30,7 +30,7 @@ def insert_user(username, password):
     hasher.update(salt)
     encrypted = hasher.hexdigest()
 
-    conn = mysql.connector.connect(user='this', database='Ocean')
+    conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
     cursor = conn.cursor()
     add_user = ("""INSERT INTO Users
             (UserName, Pass, Salt, UID)
@@ -52,7 +52,7 @@ def dupliCheck(username):
 
 
     try:
-        conn = mysql.connector.connect(user='this', database='Ocean')
+        conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
     
     except mysql.connector.Error as err:
         print("Content-type: text/html\n\n")
@@ -70,7 +70,7 @@ def dupliCheck(username):
         cursor = conn.cursor(buffered=True)
 
         query = ("SELECT * FROM Users "
-        "WHERE UserName='" + username+ "'")
+        "WHERE UserName='"+username+ "'")
         
         a = cursor.execute(query)
         if cursor.rowcount >= 1:
@@ -93,14 +93,16 @@ form = cgi.FieldStorage()
 username = form['username'].value
 password = form['password'].value
 
+for c in [';','(',')','\'',',',' ']:
+    username = ''.join(username.split(c))
+
 if dupliCheck(username):
     insert_user(username, password)
-    cookie_handler.generateLoginCookieHeader()
+    cookie_handler.generateLoginCookieHeader(username)
     generateUserAccountPage(username)
-
 else:
     print("Content-type: text/html\n\n")
-    print("Authentication Failed")
+    print("Username already taken.")
    
 
 
