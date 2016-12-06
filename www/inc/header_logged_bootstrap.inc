@@ -11,7 +11,7 @@
       <h1>Ocean</h1>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a data-toggle="pill" href="#myaccount">My Account</a></li>
-        <li><a data-toggle="pill" href="#favoritebottles">Favorite Bottles</a></li>
+        <li><a data-toggle="pill" href="#favoritebottles" id="favoritebottles">Favorite Bottles</a></li>
         <li><a data-toggle="pill" href="#chat">Chat</a></li>
         <li><a data-toggle="pill" href="#feed">Bottle Feed</a></li>
       </ul><br>
@@ -61,7 +61,8 @@
     	</div>
     	<div id="feed" class="tab-pane fade">
     		<h4><small>RECENT POSTS</small></h4>
-    		<div class="col-sm-9" id="post-container">
+    		<div class="col-sm-9" id="post-container" style="background-color: black">
+    		<p>THIS IS AN ELEMENT WITH WIDTH!!!</p>
     		</div>
     	</div>
     </div>
@@ -84,13 +85,8 @@
 					"<br><br>"
 		}
 
-		function retrievePost() {
-
-		}
-
 		$(function(){
 			$("#confirm_menu").click(function() {
-
 				var option = $("#menu-links option:selected").text(); //Retrieve menu option select when "Confirm" clicked
 				var option_value = $("#menu-links option:selected").val();
 				switch (option) { //Do various actions based on the value of the selection
@@ -101,34 +97,30 @@
 						$("#message").focus();
 						break;
 					case "Recieve a bottle": //Query recMessage.py to query database to get new posts
-					$.ajax({
-						type: "GET",
-						url: "cgi-bin/recMessage.py",
-						success: function(data, status) {
-								var dataArray = data.split(",");
-								var message = dataArray[0];
-								var title = dataArray[1];
-								var date = dataArray[2];
-								var UNameTo = dataArray[3];
-								var UnameSent = dataArray[4];
-								var mID = dataArray[5];
-
-								if (title == "") {
-									title = "";
+						$.ajax({
+							type: "GET",
+							dataType: "json",
+							url: "cgi-bin/recMessage.py",
+							success: function(data, status) {
+									var title = data["Title"];
+									var message = data["Data"];
+									var user = data["UnameSent"];
+									var time = data["Posttime"];
+									
+									if (title == "") {
+										title = "---";
+									}
+									if (user == "") {
+										user = "Anonymous";
+									}
+									
+									var titleText = title+"	|	By: "+user;
+									var dateText = time;
+									$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
+								},
+								error: function(data, status) {
+									alert("Unable to complete request.");
 								}
-								if (UnameSent == "") {
-									UnameSent = "Anonymous";
-								}
-
-								var messageText = message;
-								var titleText = title;
-								var author = UnameSent;
-								var dateText = date;
-								$(generatePost(titleText, author, messageText, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
-							},
-							error: function(data, status) {
-								alert("Unable to complete request.");
-							}
 						});
 						break;
 					case "DEARGODLETMELIVE": //O Great Roko, please have mercy
@@ -179,7 +171,8 @@
 
 			// Below has been written new for bootystrap since testtheme.php
 
-			$("#favoritebottles").click(function(event) {
+			$("a[href='#favoritebottles']").on('shown.bs.tab', function(e) {
+			// $("#favoritebottles").click(function(event) {
 				var favoriteIDs;
 				$.ajax({
 					type: "GET",
@@ -187,13 +180,25 @@
 					dataType: "json",
 					data: {"username":"test4"}, //USERNAME HARDCODED UNTIL FURTHER NOTICE
 					success: function(data, status){
-						$("body").append(data);
-						// alert("UnJSON'd\n"+data);
-						// console.log(data);
-						// favoriteIDS = data[0];
-						// alert("JSON'd\n"+favoriteIDs);
-						// for id in favoriteIDs:
-						// 	$(generatePost(titleText, author, messageText, dateText)).prependTo("#post-container").hide().fadeIn('slow');
+
+						for (var i=0; i<Object.keys(data).length; i++) {
+							var title = data[i.toString()]["Title"];
+							var message = data[i.toString()]["Data"];
+							var user = data[i.toString()]["UnameSent"];
+							var time = data[i.toString()]["Posttime"];
+
+							if (title == "") {
+								title = "---";
+							}
+							if (user == "") {
+								user = "Anonymous";
+							}
+
+							var titleText = title+"	|	By: "+user;
+							var dateText = time;
+
+							$(generatePost(titleText, user, message, dateText)).prependTo("#feed").hide().fadeIn('slow');
+						}
 					},
 					error: function(data, status){
 						alert("Unable to complete request.");

@@ -9,16 +9,27 @@ import hashlib
 import datetime
 import os
 import cookie_handler
+import json
 
 cgitb.enable()
 
+#get message data
+# messageInfo = cgi.FieldStorage()
+
+# alreadyPulled = tuple(messageInfo["pulled"].value)
+
 conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 cursor = conn.cursor()
-query = "SELECT * FROM Messages ORDER BY RAND() LIMIT 1"
+query = "SELECT Title, Data, UnameSent, Posttime FROM Messages ORDER BY RAND() LIMIT 1"
+# query = "SELECT Title, Data, UnameSent, Posttime, mID FROM Messages WHERE Messages.mID NOT IN"+str(alreadyPulled)+"ORDER BY RAND() LIMIT 1;"
 cursor.execute(query)
-result = cursor.fetchall();
+result = cursor.fetchall()
 result = result[0]
+jsonreturn = {"Title": result[0], "Data": result[1], "UnameSent": result[2], "Posttime": result[3]} #, "mID": result[4]}
+
 conn.close()
+
+
 
 # loopCounter = 0;
 # while "\"" in result or "\'" in result: #Cleanse results of quotes
@@ -27,12 +38,12 @@ conn.close()
 # 	if loopCounter > len(result):  #Basic inf loop failsafe
 # 		break;
 
-formattedResult = ""
-for column in result:
-	formattedResult += str(column)
-	formattedResult += ","
-formattedResult = formattedResult[:-1]
+#formattedResult = ""
+#for column in result:
+#	formattedResult += str(column)
+#	formattedResult += ","
+#formattedResult = formattedResult[:-1]
 #Format into comma seperated list
 
-print("Content-type: text/html\n\n")
-print(str(formattedResult))
+print ("Content-type: text/html\n\n")
+print json.dumps(jsonreturn)

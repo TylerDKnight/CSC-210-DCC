@@ -32,7 +32,7 @@ if (anon == "false" or anon == "False"):
 	username = cookie_handler.readLoginCookieHeader()
 else:
 	username = ""
-conn = mysql.connector.connect(user='this', database='Ocean', user='DCC', password='abcd')
+conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 cursor = conn.cursor()
 add_Message = ("""INSERT INTO Messages
         (Data, Title, Posttime, UnameSent)

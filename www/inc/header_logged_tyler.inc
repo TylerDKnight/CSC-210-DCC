@@ -39,7 +39,8 @@
 									<option value="https://lh3.googleusercontent.com/-2rj78ZwMvmA/AAAAAAAAAAI/AAAAAAAAAA8/fvpmcm1iITA/photo.jpg">DEARGODLETMELIVE</option>
 									<option value="/learn_more.php">Learn More</option>
 								</select>
-								<button id="confirm_menu" class="button">Confirm</button>				
+								<button id="confirm_menu" class="button">Confirm</button>
+								<button id="favoritebottles" class="button">Get favs</button>				
 				</header>
 				<!--/ header -->
 
@@ -162,33 +163,30 @@
 						$("#message").focus();
 						break;
 					case "Recieve a bottle": //Query recMessage.py to query database to get new posts
-					$.ajax({
-						type: "GET",
-						url: "cgi-bin/recMessage.py",
-						success: function(data, status) {
-								var dataArray = data.split(",");
-								var message = dataArray[0];
-								var title = dataArray[1];
-								var date = dataArray[2];
-								var UNameTo = dataArray[3];
-								var UnameSent = dataArray[4];
-								var mID = dataArray[5];
-
-								if (title == "") {
-									title = "---";
+						$.ajax({
+							type: "GET",
+							dataType: "json",
+							url: "cgi-bin/recMessage.py",
+							success: function(data, status) {
+									var title = data["Title"];
+									var message = data["Data"];
+									var user = data["UnameSent"];
+									var time = data["Posttime"];
+									
+									if (title == "") {
+										title = "---";
+									}
+									if (user == "") {
+										user = "Anonymous";
+									}
+									
+									var titleText = title+"	|	By: "+user;
+									var dateText = time;
+									$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
+								},
+								error: function(data, status) {
+									alert("Unable to complete request.");
 								}
-								if (UnameSent == "") {
-									UnameSent = "Anonymous";
-								}
-
-								var messageText = message;
-								var titleText = title+"	|	By: "+UnameSent;
-								var dateText = date;
-								$(generatePost(titleText, messageText, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
-							},
-							error: function(data, status) {
-								alert("Unable to complete request.");
-							}
 						});
 						break;
 					case "DEARGODLETMELIVE": //O Great Roko, please have mercy
@@ -228,6 +226,43 @@
 						}
 					});
 				}
+			});
+
+
+			$("#favoritebottles").click(function(event) {
+				var favoriteIDs;
+				$.ajax({
+					type: "GET",
+					url: "cgi-bin/recFavs.py",
+					dataType: "json",
+					data: {"username":"test4"}, //USERNAME HARDCODED UNTIL FURTHER NOTICE
+					success: function(data, status){
+
+						for (var i=0; i<Object.keys(data).length; i++) {
+							var title = data[i.toString()]["Title"];
+							var message = data[i.toString()]["Data"];
+							var user = data[i.toString()]["UnameSent"];
+							var time = data[i.toString()]["Posttime"];
+
+							if (title == "") {
+								title = "---";
+							}
+							if (user == "") {
+								user = "Anonymous";
+							}
+
+							var titleText = title+"	|	By: "+user;
+							var dateText = time;
+
+							$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow');
+						}
+
+					},
+					error: function(data, status){
+						alert("Unable to complete request.");
+						console.log(status);
+					}
+				});
 			});
 
 			$("#logout").click(function(event) {

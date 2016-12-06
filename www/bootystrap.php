@@ -19,6 +19,10 @@
       height: 100%;
       /*float: right;*/
     }
+
+    #post-container {
+      border: 5px solid hotpink;
+    }
     
     div .tab-content {
       padding-top: 10px;
