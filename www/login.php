@@ -16,7 +16,7 @@
 	<?php
 	$cookie_name = "previous_login";
 	if(isset($_COOKIE[$cookie_name])) {
-		header('Location: /testtheme.php');
+		header('Location: /theme2.php');
 		//Add a suggestion to redirect in case page doesn't do it automatically
 	} else {
 		include "inc/header_not_logged.inc"; 
