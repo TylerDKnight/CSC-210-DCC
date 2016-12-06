@@ -220,7 +220,8 @@
 							$("#submission_status").html("Message cast!").css({"color":"#8F8"}).show().fadeOut(4000);
 							$("#confirm_send").hide().fadeIn("slow");
 						},
-						error: function() {
+						error: function(data) {
+							console.log(data);
 							// alert("Unable to complete request.");
 							$("#submission_status").html("Request failed!").css({"color":"#bf5454"}).show().fadeOut(4000);
 							$("body").append(data); //REMOVE WHEN DONE TESTING; WILL ADD CGIB ERROR TO HTML BODY

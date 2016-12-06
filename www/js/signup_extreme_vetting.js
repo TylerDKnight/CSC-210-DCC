@@ -34,9 +34,12 @@ var username_check = function(event, preventDefault) {
 		if (preventDefault === true) {
 			event.preventDefault();
 		}
-	}
-
-	else {
+	} else if ($('#username').val().length > 30) {
+		$('#username-error').text('Username is too long.');
+		if (preventDefault === true) {
+			event.preventDefault();
+		}
+	} else {
 		var $uname_err = $('#username-error');
 		$uname_err.text('');  // clear previous username error to check for new one
 		$.ajax({  // perform ajax check

@@ -66,7 +66,7 @@ def main():
 	# get the user data from the sent form
 	login_data = cgi.FieldStorage()
 	username = login_data['username'].value
-	password = login_data['password'].value
+	password = login_data['password'].value	
 
 	if authenticate(username, password):
 		cookie_handler.generateLoginCookieHeader(username)
