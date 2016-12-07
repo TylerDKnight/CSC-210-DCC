@@ -9,5 +9,5 @@
 	?>
 	<br>
 	<br>
-	<button><a href="/testtheme.php">BACK</a></button>
+	<button><a href="/quack.php">BACK</a></button>
 </body>
