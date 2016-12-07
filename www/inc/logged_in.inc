@@ -81,7 +81,7 @@
 			}
 			return "<hr>"+
 					"<h3>"+title+"</h3>"+
-					"<p><u><a href=\"#\"><span><img src=\"images/glyphicon-time.png\"></span> Post by "+author+", "+date+".</a></u>  "+
+					"<p><u><a href=\"#\"><span><img src=\"images/glyphicon-time.png\"></span> Post by "+author+"</a></u>  "+
 					"<img class=\"heart\" id=\""+id+"\" src=\"images/glyphicon-heart-"+favorited+".png\"></p>"+
 					"<p class=\"bottlecontent\">"+content+"</p>"+
 					"<br><hr>";
