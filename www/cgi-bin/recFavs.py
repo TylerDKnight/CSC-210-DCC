@@ -14,12 +14,13 @@ import json
 cgitb.enable()
 
 sentData = cgi.FieldStorage()
-username = sentData['username'].value
+# username = sentData['username'].value
+username = cookie_handler.readLoginCookieHeader()
 
 conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 cursor = conn.cursor()
 # query = "SELECT GROUP_CONCAT(MessageID separator ', ') FROM Favorites where Uname  = '"+username+"';"
-query = "SELECT Data, Title, Posttime, UnameSent, mID FROM Messages WHERE mID IN (SELECT MessageID FROM Favorites WHERE Uname='test4');" #UNSANITIZED UNTIL FURTHER NOTICE
+query = "SELECT Data, Title, Posttime, UnameSent, mID FROM Messages WHERE mID IN (SELECT MessageID FROM Favorites WHERE Uname='"+username+"');" #UNSANITIZED UNTIL FURTHER NOTICE
 cursor.execute(query)
 
 result = cursor.fetchall()

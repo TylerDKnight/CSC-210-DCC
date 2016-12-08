@@ -29,7 +29,7 @@
 	<?php
 	$cookie_name = "previous_login";
 	if(isset($_COOKIE[$cookie_name])) {
-		header('Location: /testtheme.php');
+		header('Location: /quack.php');
 	} else {
 		include "inc/header_not_logged.inc"; 
 	} ?>

@@ -28,7 +28,7 @@
 						<a href="/testtheme.php">Ocean</a>
 					</h1>
 					
-					<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience!</p>
+					<p>Welcome to Ocean, a free, anonymous, user-driven messaging experience!</p>
 						
 								<!--<select name="menu-links" onchange="javascript:parent.location=this.options[this.selectedIndex].value;"> Performs action upon selection
 								<select id="menu-links">

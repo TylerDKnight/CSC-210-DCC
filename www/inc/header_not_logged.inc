@@ -16,7 +16,7 @@
 <body>
 <div class="content">
 		<h1>Welcome to Ocean!</h1>
-		<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience.</p>
+		<p>Welcome to Ocean, a free, anonymous, user-driven messaging experience!</p>
 	</div>  <!-- content -->
 </body>
 

@@ -3,26 +3,26 @@
 		<main>
 			<div id="content">
 				<div id="bottlebar">
-					<h5>Make a bottle...</h5>
+					<h5>Create a New Bottle...</h5>
 					<input id="title" type="text" placeholder="Give it a title (optional)">
-					<label for="anon">anonymous?</label><input id="anon" type="checkbox"><br>
+					<label for="anon">Anonymous?</label><input id="anon" type="checkbox"><br>
 					<textarea id="message" rows=3 columns=150 maxlength=1000 placeholder="Write your message..."></textarea><br>
-					<button id="confirm_send">Cast it away!</button>
+					<button id="confirm_send">Cast it out to Sea!</button>
 					<span id="submission_status"></span>
 				</div>
 				<div class="innertube" id="content-container">
 					<!-- <p><script>generateText(30)</script></p> -->
 				</div>
-				<footer>
-					<hr><hr>
-					<p>DCC, 2016. All rights reserved.</p>
-				</footer>
+				
 			</div>
 		</main>
 
 		<nav id="nav">
 			<div class="innertube">
 				<h1><b>Ocean</b></h1>
+				<ul>
+					<li><a href="/learn_more.php">About This Site</a></li>
+				</ul>
 				<hr><hr>
 				<h3>My Account</h3>
 				<ul>
@@ -50,10 +50,6 @@
 					<li><a href="#" id="updatefeed">Update feed</a></li>
 				</ul>
 				<hr>
-				<h3>Chat</h3>
-				<ul>
-					<li><a href="#">See conversations</a></li>
-				</ul>
 				<hr>
 				<!-- <select id="menu-links">
 					<option value="/testtheme.php"></option>
@@ -196,7 +192,8 @@
 
 			$("#logout").click(function(event) {
 				if (confirm("Logout?")) {
-					window.location.reload(true);
+					
+					//window.location.reload(true);
 				} else {
 					event.preventDefault();
 				}
@@ -211,7 +208,6 @@
 					type: "GET",
 					url: "cgi-bin/recFavs.py",
 					dataType: "json",
-					data: {"username":"test4"}, //USERNAME HARDCODED UNTIL FURTHER NOTICE
 					success: function(data, status){
 						clearContentStream(true, "favoritebottles");
 						for (var i=0; i<Object.keys(data).length; i++) {
