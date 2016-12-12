@@ -26,6 +26,6 @@ def generateUserAccountPage(username):
 	print "\r\n\r\n"
 	print "<html>"
 	print "<script type=\"text/javascript\">"
-	print	"window.location.replace(\"/testtheme.php\");"
+	print	"window.location.replace(\"/quack.php\");"
 	print "</script>"
 	print "</html>"

@@ -20,10 +20,8 @@ username = cookie_handler.readLoginCookieHeader()
 
 conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 cursor = conn.cursor()
-# query = "SELECT GROUP_CONCAT(MessageID separator ', ') FROM Favorites where Uname  = '"+username+"';"
-query = "INSERT INTO Favorites(Uname, MessageID) VALUES(%s, %s);" 
-toAdd = (username, messageID)
-cursor.execute(query, toAdd)
+query = "DELETE FROM Favorites WHERE MessageID="+messageID+";"
+cursor.execute(query)
 conn.commit()
 conn.close()
 

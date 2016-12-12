@@ -1,3 +1,4 @@
+#!C:/Python27/python.exe
 
 #This file is for checking and creating cookies.
 

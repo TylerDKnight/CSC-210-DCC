@@ -20,7 +20,7 @@
 
 	<div class="post-body">
 		<h1>Welcome to Ocean!</h1>
-		<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience.</p>
+		<p>Welcome to Ocean, a free, anonymous, user-driven messaging experience!</p>
 		<ul>
 			<li><a id="nav-login" href="login.php">Login</a></li>
 			<li><a id="nav-create-account" href="create_account.php">Sign Up</a></li>

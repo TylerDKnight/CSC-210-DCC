@@ -5,9 +5,9 @@
 				<div id="bottlebar">
 					<h5>Make a bottle...</h5>
 					<input id="title" type="text" placeholder="Give it a title (optional)">
-					<label for="anon">anonymous?</label><input id="anon" type="checkbox"><br>
+					<label for="anon">Anonymous?</label><input id="anon" type="checkbox"><br>
 					<textarea id="message" rows=3 columns=150 maxlength=1000 placeholder="Write your message..."></textarea><br>
-					<button id="confirm_send">Cast it away!</button>
+					<button id="confirm_send">Cast it out ot sea!</button>
 					<span id="submission_status"></span>
 				</div>
 				<div class="innertube" id="content-container">
@@ -23,10 +23,13 @@
 		<nav id="nav">
 			<div class="innertube">
 				<h1><b>Ocean</b></h1>
+				<ul>
+					<li><a href="/learn_more.php">About This Site</a></li>
+				</ul>
 				<hr><hr>
 				<h3>My Account</h3>
 				<ul>
-					<li><a href="#" id="accountdetails">Account Details</a></li>
+					<li><a href="account_details.php" id="accountdetails">Account Details</a></li>
 					<?php
 			    		if (!empty($_GET['act'])) {
 			    		setcookie("previous_login", " ", time() - 3600);
@@ -73,18 +76,17 @@
 
 
 	<script type="text/javascript">
-	var pulledAlready = {};
-
-		function generatePost(title, author, content, date, favorited) {
+		var pulledAlready = {};
+		function generatePost(title, author, content, date, favorited, id) {
 			if (favorited === undefined) { //If no favorite status given, assume false
 				favorited = false;
 			}
 			return "<hr>"+
 					"<h3>"+title+"</h3>"+
-					"<p><u><a href=\"#\"><span><img src=\"images/glyphicon-time.png\"></span> Post by "+author+", "+date+".</a></u>  "+
-					"<img class=\"heart\" src=\"images/glyphicon-heart-"+favorited+".png\"></p>"+
+					"<p><u><a href=\"#\"><span><img src=\"images/glyphicon-time.png\"></span> Post by "+author+"</a></u>  "+
+					"<img class=\"heart\" id=\""+id+"\" src=\"images/glyphicon-heart-"+favorited+".png\"></p>"+
 					"<p class=\"bottlecontent\">"+content+"</p>"+
-					"<br><hr>"
+					"<br><hr>";
 		}
 
 		function clearContentStream() {
@@ -148,7 +150,7 @@
 						var message = data["Data"];
 						var user = data["UnameSent"];
 						var time = data["Posttime"];
-						// var id = data["mID"];
+					    var id = data["mID"];
 						// if (pulledAlready.indexOf(id) == -1) {pulledAlready.push(id);}
 						
 						if (title == "") {
@@ -157,8 +159,7 @@
 						if (user == "") {
 							user = "Anonymous";
 						}
-						
-						$(generatePost(title, user, message, time)).prependTo("#content-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
+						$(generatePost(title, user, message, time, false, id)).prependTo("#content-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
 					},
 					error: function(data, status) {
 						alert("Unable to complete request.");
@@ -196,8 +197,8 @@
 			});
 
 			$("#logout").click(function(event) {
-				if (confirm("Logout?")) {
-					window.location.reload(true);
+				if (confirm("Logout?")) {					
+					//window.location.reload(true);
 				} else {
 					event.preventDefault();
 				}
@@ -212,7 +213,6 @@
 					type: "GET",
 					url: "cgi-bin/recFavs.py",
 					dataType: "json",
-					data: {"username":"test4"}, //USERNAME HARDCODED UNTIL FURTHER NOTICE
 					success: function(data, status){
 						clearContentStream(true, "favoritebottles");
 						for (var i=0; i<Object.keys(data).length; i++) {
@@ -220,6 +220,7 @@
 							var message = data[i.toString()]["Data"];
 							var user = data[i.toString()]["UnameSent"];
 							var time = data[i.toString()]["Posttime"];
+							var id = data[i.toString()]["mID"];
 
 							if (title == "") {
 								title = "---";
@@ -228,12 +229,12 @@
 								user = "Anonymous";
 							}
 
-							$(generatePost(title, user, message, time, true)).prependTo("#content-container").hide().fadeIn('slow');
+							$(generatePost(title, user, message, time, true, id)).prependTo("#content-container").hide().fadeIn('slow');
 						}
 					},
 					error: function(data, status){
 						alert("Unable to complete request.");
-						console.log(status);
+						console.log(data);
 					}
 				});
 			});
@@ -241,16 +242,37 @@
 
 			$("body").on("click", "img", function(event) {
 		        var currentSource = $(this).attr("src");
+		        var faveID = $(this).attr("id");
+		       
 		        if (currentSource == "images/glyphicon-heart-false.png") {
-		        	$(this).attr("src", "images/glyphicon-heart-true.png");
-		        	// $.ajax({
-		        	// 	type: "POST",
-		        	// 	url: "/cgi-bin/subFav.py",
-		        	// 	data: {post id goes here then server adds or removes from favorites DB and all is well},
-		        	// 	success: function(){}, error: function(){}});
-		        	// 	}
+		        	$(this).attr("src", "images/glyphicon-heart-true.png"); //Changes to filled in heart
+		        	$.ajax({
+		        		type: "POST",
+		        		url: "/cgi-bin/subFav.py",
+		        		data: {"messageID":faveID},
+		        	 	success: function(data, status){
+		        	 		alert("favorited!");
+		        	 		
+		        	 	},
+		        	 	error: function(data, status){
+		        	 		alert("Unable to complete request.");
+		        	 	} 
+		        	 });
 		        } else {
-		        	$(this).attr("src", "images/glyphicon-heart-false.png");
+		        	$(this).attr("src", "images/glyphicon-heart-false.png"); //Changes to black heart
+		        	
+		        	$.ajax({
+		        		type: "POST",
+		        		url: "/cgi-bin/delFav.py",
+		        		data: {"messageID":faveID},
+		        	 	success: function(data, status){
+		        	 		alert("un-favorited!");
+		        	 		
+		        	 	},
+		        	 	error: function(data, status){
+		        	 		alert("Unable to complete request.");
+		        	 	} 
+		        	 });
 		        }
     		});
 

@@ -19,20 +19,18 @@
 		<h1>About Ocean</h1>
 
 		<h2>The Foundations of Ocean</h2>
-		<p>Ocean was created by DCC, Inc., a partnership of four sexy young web developers: Richie, 
+		<p>Ocean was created by DCC, Inc., a partnership of four young web developers: Richie, 
 			Joey P., CC, and Ringo Starr.  The group decided to go about creating the site based on an
 			idea for a completely anonymous, no-strings-attached messaging pool they called "Message 
-			In A Bottle".  As the idea evolved, a chat aspect was integrated into the user experience, and
+			In A Bottle".  As the idea evolved, a favorites system was integrated into the user experience, and
 			the project was renamed <span class="italic">theocean</span>.  However, at the advice of Justin
 			Timberlake in the film <span class="italic">The Social Network</span>, the name was again
 			changed to the sleeker, cleaner <span class="italic">Ocean</span>.</p>
-		<p>There was work ahead, but the four heroes knew that they could accomplish 
-			anything with Richie's young money millions, Joey's neuroticism, CCs itchiness, and Ringo's 
-			extensive experience developing Certified Safe Spaces (CSS).</p>
+	 
 
 		<h2>Ocean's Features</h2>
-		<p>Currently, Ocean doesn't have that many features, and basically consists only of a login and 
-			a page where users can create accounts.  More on this later.</p>
+		<p>Currently, Ocean allows any user to create an account and view their account information, and send messages (anonymous or not)
+		"Out to Sea." These messages can be viewed and favorited by other users, and one can create a list of their own favorite messages, or "bottles," as we call them.</p>
 
 	</div>  <!-- content -->
 	<script src="js/nav-handler.js"></script>

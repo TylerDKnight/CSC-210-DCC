@@ -28,9 +28,9 @@
 						<a href="/testtheme.php">Ocean</a>
 					</h1>
 					
-					<p>Welcome to Ocean, a free, anonymous, user-driven messaging and chat experience!</p>
+					<p>Welcome to Ocean, a free, anonymous, user-driven messaging experience!</p>
 						
-								<!--<select name="menu-links" onchange="javascript:parent.location=this.options[this.selectedIndex].value;"> Performs action upon selection-->
+								<!--<select name="menu-links" onchange="javascript:parent.location=this.options[this.selectedIndex].value;"> Performs action upon selection
 								<select id="menu-links">
 									<option value="/testtheme.php"></option>
 									<option value="/account_details.php">My account</option>
@@ -39,8 +39,18 @@
 									<option value="https://lh3.googleusercontent.com/-2rj78ZwMvmA/AAAAAAAAAAI/AAAAAAAAAA8/fvpmcm1iITA/photo.jpg">DEARGODLETMELIVE</option>
 									<option value="/learn_more.php">Learn More</option>
 								</select>
-								<button id="confirm_menu" class="button">Confirm</button>
-								<button id="favoritebottles" class="button">Get favs</button>				
+								<button id="confirm_menu" class="button">Confirm</button>	-->
+								
+								<div id="menu-links">
+ 								 	<a href="/account_details.php">My Account</a>
+ 								 	<br><br>
+ 									<a href="#">Favorites</a>
+ 									<br><br>
+  									<a href="/learn_more.php">Learn More</a>
+  									<br><br>
+  									<a href="">Receive a New Bottle</a>		
+  								</div>
+  					<br><br><p>Send a Bottle!</p>
 				</header>
 				<!--/ header -->
 
@@ -162,31 +172,32 @@
 					case "Send a bottle": //Give focus to the send message bar
 						$("#message").focus();
 						break;
-					case "Recieve a bottle": //Query recMessage.py to query database to get new posts
-						$.ajax({
-							type: "GET",
-							dataType: "json",
-							url: "cgi-bin/recMessage.py",
-							success: function(data, status) {
-									var title = data["Title"];
-									var message = data["Data"];
-									var user = data["UnameSent"];
-									var time = data["Posttime"];
-									
-									if (title == "") {
-										title = "---";
-									}
-									if (user == "") {
-										user = "Anonymous";
-									}
-									
-									var titleText = title+"	|	By: "+user;
-									var dateText = time;
-									$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
-								},
-								error: function(data, status) {
-									alert("Unable to complete request.");
+					case "Receive a New Bottle": //Query recMessage.py to query database to get new posts
+					$.ajax({
+						type: "GET",
+						dataType: "json",
+						url: "cgi-bin/recMessage.py",
+						success: function(data, status) {
+								var title = data["Title"];
+								var message = data["Data"];
+								var user = data["UnameSent"];
+								var time = data["Posttime"];
+								
+								if (title == "") {
+									title = "---";
 								}
+								if (user == "") {
+									user = "Anonymous";
+								}
+
+								
+								var titleText = title+"	|	By: "+user;
+								var dateText = time;
+								$(generatePost(titleText, message, dateText)).prependTo("#post-container").hide().fadeIn('slow'); //Generate HTML to display recieved data
+							},
+							error: function(data, status) {
+								alert("Unable to complete request.");
+							}
 						});
 						break;
 					case "DEARGODLETMELIVE": //O Great Roko, please have mercy
