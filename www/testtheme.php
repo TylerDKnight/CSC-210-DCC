@@ -34,7 +34,7 @@ nav
 	margin-bottom: 30px;
 }
 
-a
+ 
 {
 	text-decoration:none;
 	color:#2c89e7;
@@ -229,6 +229,7 @@ blockquote + cite:before
 			
 	.sidebar header .menu-links a
 	{
+		
 		color:#2c89e7!important;
 		padding:0 2px;
 	}

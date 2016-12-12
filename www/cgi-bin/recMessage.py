@@ -20,12 +20,11 @@ cgitb.enable()
 
 conn = mysql.connector.connect(user='DCC', password='abcd', database='Ocean')
 cursor = conn.cursor()
-query = "SELECT Title, Data, UnameSent, Posttime FROM Messages ORDER BY RAND() LIMIT 1"
-# query = "SELECT Title, Data, UnameSent, Posttime, mID FROM Messages WHERE Messages.mID NOT IN"+str(alreadyPulled)+"ORDER BY RAND() LIMIT 1;"
+query = "SELECT Title, Data, UnameSent, Posttime, mID FROM Messages ORDER BY RAND() LIMIT 1"
 cursor.execute(query)
 result = cursor.fetchall()
 result = result[0]
-jsonreturn = {"Title": result[0], "Data": result[1], "UnameSent": result[2], "Posttime": result[3]} #, "mID": result[4]}
+jsonreturn = {"Title": result[0], "Data": result[1], "UnameSent": result[2], "Posttime": result[3], "mID": result[4]}
 
 conn.close()
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/local/bin/python
 #HASHBANG CHANGED FOR LINUX COMPATIBILITY
 
 import cgi
@@ -46,4 +46,6 @@ cursor.close()
 conn.close()
 
 print("Content-type: text/html\n\n")
+print 
+
 print("Message Submitted"+" anon is: "+anon)
